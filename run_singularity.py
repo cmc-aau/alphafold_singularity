@@ -19,9 +19,7 @@
 """Singularity launch script for Alphafold Singularity image."""
 
 import os
-import sys
 import pathlib
-import signal
 from typing import Tuple
 
 from absl import app
@@ -30,15 +28,23 @@ from absl import logging
 from spython.main import Client
 
 import tempfile
-import subprocess
-
 
 #### USER CONFIGURATION ####
 
 # Path to AlphaFold Singularity image. This relies on
 # the environment variable ALPHAFOLD_DIR which is the
 # directory where AlphaFold is installed.
-singularity_image = Client.load(os.path.join(os.environ['ALPHAFOLD_DIR'], 'alphafold.sif'))
+if 'ALPHAFOLD_DIR' in os.environ:
+    alphafold_dir = os.environ['ALPHAFOLD_DIR']
+else:
+    alphafold_dir = os.path.dirname(__file__)
+    
+if 'ALPHAFOLD_IMAGE' in os.environ:
+    singularity_image = os.environ['ALPHAFOLD_IMAGE']
+else:    
+    alphafold_version = "v2.3.2"
+    singularity_image_filename = f'alphafold_{alphafold_version}.sif'
+    singularity_image = Client.load(os.path.join(alphafold_dir, singularity_image_filename))
 
 # tmp directory
 if 'TMP' in os.environ:
@@ -49,7 +55,7 @@ else:
     tmp_dir = '/tmp'
 
 # Default path to a directory that will store the results.
-output_dir_default = tempfile.mkdtemp(dir=tmp_dir, prefix='alphafold')
+output_dir_default = "output" # tempfile.mkdtemp(dir=tmp_dir, prefix='alphafold')
 
 logging.info(f'INFO: tmp_dir = {tmp_dir}')
 logging.info(f'INFO: output_dir_default = {output_dir_default}')
@@ -128,7 +134,7 @@ flags.DEFINE_string(
 
 FLAGS = flags.FLAGS
 
-_ROOT_MOUNT_DIRECTORY = '/mnt/'
+_ROOT_MOUNT_DIRECTORY = '/'
 
 
 def _create_bind(bind_name: str, path: str) -> Tuple[str, str]:

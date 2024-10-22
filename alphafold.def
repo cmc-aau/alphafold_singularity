@@ -1,0 +1,2 @@
+Bootstrap: docker
+From: ghcr.io/cmc-aau/alphafold:main
