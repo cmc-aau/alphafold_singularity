@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 # Copyright 2023 David Chin
 #
@@ -17,13 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with alphafold_singularity. If not, see <https://www.gnu.org/licenses/>.
 
-#SBATCH --job-name=alphafold
+#SBATCH --job-name=alphafold_alginate
 #SBATCH --output=job_%j_%x.out
 #SBATCH --partition=gpu
 #SBATCH --time=2:00:00
 #SBATCH --gres=gpu:1
-#SBATCH --cpus-per-gpu=12
-#SBATCH --mem-per-gpu=36G
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=36G
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=abc@bio.aau.dk
 
