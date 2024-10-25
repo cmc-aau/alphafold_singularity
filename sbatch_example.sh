@@ -27,7 +27,7 @@
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=abc@bio.aau.dk
 
-pip3 install -r requirements.txt
+conda activate alphafold
 
 ALPHAFOLD_DATABASE_DIR="/databases/alphafold"
 output_dir=output

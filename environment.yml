@@ -1,0 +1,6 @@
+name: alphafold
+channels:
+  - conda-forge
+dependencies:
+  - absl-py=2.1.0
+  - spython=0.3.14
