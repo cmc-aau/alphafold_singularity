@@ -48,4 +48,4 @@ python3 /shared_software/biocloud-software/alphafold_singularity/run_singularity
     --fasta_paths=T1050.fasta \
     --max_template_date=2020-05-14 \
     --model_preset=monomer \
-    --db_preset=reduced_dbs
+    --db_preset=full_dbs
